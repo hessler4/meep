@@ -100,16 +100,14 @@ class MeepExampleApp(object):
 	        if m.id not in listed:
 		        s.extend(retrieve_message(m))
 		        currid = m.id
-		        deepest_node = m
 		        while True:
 			        found = False
 			        nests = 0
+			        deepest_node = meeplib.get_message(currid)
 			        for child in messages:
-				        #print('looping')
 				        if child.parent == currid and child.id not in listed:
 					        found = True
 					        nests+=1
-					        parent_id = currid
 					        for x in xrange(0, nests):
 					            s.append('<ul>')
 
@@ -122,9 +120,8 @@ class MeepExampleApp(object):
 					        currid = child.id
 					        deepest_node = child
 					
-				if found == False: break
-		        #currid = deepest_node.parent
-		        #if currid == -1: break 
+			        currid = deepest_node.parent
+			        if currid == -1: break 
 			
         listed.clear()
         s.append("<a href='../../'>index</a>")
