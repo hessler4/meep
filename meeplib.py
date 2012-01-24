@@ -68,9 +68,10 @@ class Message(object):
     'author' must be an object of type 'User'.
     
     """
-    def __init__(self, title, post, author):
+    def __init__(self, title, post, author, parent):
         self.title = title
         self.post = post
+        self.parent = parent
 
         assert isinstance(author, User)
         self.author = author
