@@ -121,10 +121,10 @@ class MeepExampleApp(object):
 					        listed.add(child.id)
 					        currid = child.id
 					        deepest_node = child
-			
-			        if found == False: break
-		        currid = deepest_node.parent
-		        if currid == -1: break 
+					
+				if found == False: break
+		        #currid = deepest_node.parent
+		        #if currid == -1: break 
 			
         listed.clear()
         s.append("<a href='../../'>index</a>")
