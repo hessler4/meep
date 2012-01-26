@@ -99,28 +99,29 @@ class MeepExampleApp(object):
         for m in messages:
 	        if m.id not in listed:
 		        s.extend(retrieve_message(m))
-		        currid = m.id
+		        curr_id = m.id
 		        deepest_node = m
+		        indent = 0
 		        while True:
-			        nests = 0
 			        for child in messages:
-				        if child.parent == currid and child.id not in listed:
-					        nests+=1
-					        for x in xrange(0, nests):
+				        if child.parent == curr_id and child.id not in listed:
+					        indent+=1
+					        for x in xrange(0, indent):
 					            s.append('<ul>')
 
 					        s.extend(retrieve_message(child))
 
-					        for y in xrange(0, nests):
+					        for y in xrange(0, indent):
 					            s.append('</ul>')
 
 					        listed.add(child.id)
-					        currid = child.id
+					        curr_id = child.id
 					        deepest_node = child
 					
-			        currid = deepest_node.parent
-			        if currid == -1: break
-			        deepest_node = meeplib.get_message(currid)
+			        curr_id = deepest_node.parent
+			        if curr_id == -1: break
+			        indent -= 1 
+			        deepest_node = meeplib.get_message(curr_id)
 			         
 			
         listed.clear()
