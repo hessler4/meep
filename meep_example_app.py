@@ -42,14 +42,14 @@ def retrieve_message(m):
              }
              </script><a href="javascript:showonlyone('reply_form%d');" <html><body><button type="button">Reply</button></body></html></a>
              <div name="reply" id="reply_form%d"><form action='add_action' method='POST' name='heythere'>
-             Title: <input type='text' name='title'><br>
+             Title:<input type='text' name='title' value='RE: %s'><br>
              Message:<input type='text' name='message'><br>
              <input type='hidden' name='parent_id' value='%d'>
              <input type='submit'></form>
-             </div>""" % (m.id,m.id,m.id,m.id))
+             </div>""" % (m.id, m.id, m.id, m.title, m.id))
     s.append('<hr>')
     return s
-	
+
 class MeepExampleApp(object):
     """
     WSGI app object.
