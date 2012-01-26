@@ -100,13 +100,11 @@ class MeepExampleApp(object):
 	        if m.id not in listed:
 		        s.extend(retrieve_message(m))
 		        currid = m.id
+		        deepest_node = m
 		        while True:
-			        found = False
 			        nests = 0
-			        deepest_node = meeplib.get_message(currid)
 			        for child in messages:
 				        if child.parent == currid and child.id not in listed:
-					        found = True
 					        nests+=1
 					        for x in xrange(0, nests):
 					            s.append('<ul>')
@@ -121,7 +119,9 @@ class MeepExampleApp(object):
 					        deepest_node = child
 					
 			        currid = deepest_node.parent
-			        if currid == -1: break 
+			        if currid == -1: break
+			        deepest_node = meeplib.get_message(currid)
+			         
 			
         listed.clear()
         s.append("<a href='../../'>index</a>")
@@ -136,9 +136,20 @@ class MeepExampleApp(object):
         form = cgi.FieldStorage(fp=environ['wsgi.input'], environ=environ)
 
         msgid = int(form['id'].value)
-
+		
         msg = meeplib.get_message(msgid)
 
+        messages = meeplib.get_all_messages()
+
+        if msg.parent == -1:
+	        for child in messages:
+		        if child.parent == msgid:
+			        child.parent = -1
+        else:
+			for child in messages:
+				if child.parent == msgid:
+					child.parent = msg.parent
+		
         meeplib.delete_message(msg)
         
         headers = [('Content-type', 'text/html')]
