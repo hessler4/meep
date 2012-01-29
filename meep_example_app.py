@@ -298,8 +298,7 @@ class MeepExampleApp(object):
         message = form['message'].value
         parent = int(form['parent_id'].value)
         
-        username = 'test'
-        user = meeplib.get_user(username)
+        user = meeplib.get_user(self.username)
         
         new_message = meeplib.Message(title, message, user, parent)
 
