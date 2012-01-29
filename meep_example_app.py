@@ -81,7 +81,7 @@ class MeepExampleApp(object):
                         <label>password:</label> <input type='password' name='password'> <br>
                         <input type='submit' name='login button' value='Login'></form>
 
-                        <p><a href='/create_user'>Or Create a New User</a>''' %(username))
+                        <p><a href='/create_user'>Create a New User</a>''' %(username))
         return [''.join(s)]
 
     def logout(self, environ, start_response):
