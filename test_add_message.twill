@@ -1,10 +1,10 @@
 go http://localhost:8000/
-follow "Add a message"
+follow "Create a New User"
 
-fv 1 title 'test title FOO'
-fv 1 message 'this is my message'
-submit
+fv 1 username 'test user FOO'
+fv 1 password 'admin'
+Submit
 
 url /m/list
-find 'FOO'
+find 'my title'
 
