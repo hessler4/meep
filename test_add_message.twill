@@ -3,8 +3,10 @@ follow "Create a New User"
 
 fv 1 username 'test user FOO'
 fv 1 password 'admin'
-Submit
+fv 1 password_confirm 'admin'
+submit
 
+follow "show messages"
 url /m/list
 find 'my title'
 
