@@ -4,11 +4,17 @@ import cgi
 
 def initialize():
     # create a default user
-    u = meeplib.User('test', 'foo')
+    # u = meeplib.User('test', 'foo')
 
     # create a single message
-    meeplib.Message('my title', 'This is my message!', u, -1)
+    # meeplib.Message('my title', 'This is my message!', u, -1)
 
+    
+    # load previous data
+    meeplib.load()
+    #_messages, _users, _user_ids = meeplib.load()
+    #print "Messages"
+    #print _messages
     # done.
 
 def retrieve_message(m):
@@ -184,6 +190,7 @@ class MeepExampleApp(object):
                     The Password and Confirmation Password you provided did not match<p>''')
             else:
                 u = meeplib.User(username, password)
+                meeplib.save()
                 ## send back a redirect to '/'
                 k = 'Location'
                 v = '/'
@@ -264,6 +271,8 @@ class MeepExampleApp(object):
 					child.parent = msg.parent
 		
         meeplib.delete_message(msg)
+
+        meeplib.save()
         
         headers = [('Content-type', 'text/html')]
         headers.append(('Location', '/m/list'))
@@ -301,6 +310,8 @@ class MeepExampleApp(object):
         user = meeplib.get_user(self.username)
         
         new_message = meeplib.Message(title, message, user, parent)
+
+        meeplib.save()
 
         headers = [('Content-type', 'text/html')]
         headers.append(('Location', '/m/list'))

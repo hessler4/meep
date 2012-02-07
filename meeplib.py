@@ -22,6 +22,7 @@ Functions and classes:
  * get_message(msg_id) - retrieves Message object for message with id msg_id.
 
 """
+import pickle
 
 __all__ = ['Message', 'get_all_messages', 'get_message', 'delete_message',
            'User', 'get_user', 'get_all_users', 'delete_user']
@@ -59,6 +60,24 @@ def _reset():
     _users = {}
     _user_ids = {}
 
+def save():
+	print "SAVING"
+	obj = _messages, _users, _user_ids
+	print _messages
+	fp = open('save.pickle', 'wb')
+	pickle.dump(obj, fp)
+	fp.close()
+	
+def load():
+	try:
+	   print "LOADING"
+	   global _messages, _users, _user_ids
+	   fp = open('save.pickle', 'rb')
+	   _messages, _users, _user_ids = pickle.load(fp)
+	   print _messages
+	   fp.close() 
+	except IOError:  # file does not exist/cannot be opened
+	   print "Error opening 'save.pickle'"
 ###
 
 class Message(object):
