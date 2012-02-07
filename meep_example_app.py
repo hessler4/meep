@@ -8,13 +8,10 @@ def initialize():
 
     # create a single message
     # meeplib.Message('my title', 'This is my message!', u, -1)
-
     
     # load previous data
     meeplib.load()
-    #_messages, _users, _user_ids = meeplib.load()
-    #print "Messages"
-    #print _messages
+
     # done.
 
 def retrieve_message(m):
