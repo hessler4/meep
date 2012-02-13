@@ -1,0 +1,57 @@
+HTTP/1.0 200 OK
+Date: Mon, 13 Feb 2012 22:13:35 GMT
+Server: WSGIServer/0.1 Python/2.7.2
+Content-type: text/html
+
+<form action='add_action' method='GET' name='heythere'>Title: <input type='text' name='title'><br>Message:<input type='text' name='message'><br><input type='hidden' name='parent_id' value='-1'><input type='submit'></form>HTTP/1.0 404 Not Found
+Date: Mon, 13 Feb 2012 22:13:35 GMT
+Server: WSGIServer/0.1 Python/2.7.2
+Content-type: text/html
+Content-Length: 15
+
+Page not found.HTTP/1.0 302 Found
+Date: Mon, 13 Feb 2012 22:13:46 GMT
+Server: WSGIServer/0.1 Python/2.7.2
+Content-type: text/html
+Location: /m/list
+Content-Length: 13
+
+message addedHTTP/1.0 200 OK
+Date: Mon, 13 Feb 2012 22:13:46 GMT
+Server: WSGIServer/0.1 Python/2.7.2
+Content-type: text/html
+Content-Length: 1446
+
+id: 0<p>title: CSE491<p>message: ROCKS!<p>author: user<p><form action='delete' method='GET'>
+                <input type='hidden' value='0' name='id'>
+                <input type='submit' value='Delete'></form><script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+             <script type="text/javascript">
+             $(document).ready(function() { 
+                 $(reply_form0).hide();
+             });
+             function toggleDiv(divId) {
+                 $("#"+divId).toggle();
+             }
+             function showonlyone(thechosenone) {
+                 $('div[name|="reply"]').each(function(index) {
+                     if ($(this).attr("id") == thechosenone) {
+                         $(this).slideDown(600);
+		             }
+			         else {
+			             $(this).slideUp(600);
+			         }
+                 });
+             }
+             </script><a href="javascript:showonlyone('reply_form0');" <html><body><button type="button">Reply</button></body></html></a>
+             <div name="reply" id="reply_form0"><form action='add_action' method='POST' name='heythere'>
+             Title:<input type='text' name='title' value='RE: CSE491'><br>
+             Message:<input type='text' name='message'><br>
+             <input type='hidden' name='parent_id' value='0'>
+             <input type='submit'></form>
+             </div><hr><a href='../../'>index</a>HTTP/1.0 404 Not Found
+Date: Mon, 13 Feb 2012 22:13:47 GMT
+Server: WSGIServer/0.1 Python/2.7.2
+Content-type: text/html
+Content-Length: 15
+
+Page not found.

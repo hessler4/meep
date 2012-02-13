@@ -71,24 +71,24 @@ class MeepExampleApp(object):
     def login(self, environ, start_response):
         headers = [('Content-type', 'text/html')]
 
-        print "do i have input?", environ['wsgi.input']
+        #print "do i have input?", environ['wsgi.input']
         form = cgi.FieldStorage(fp=environ['wsgi.input'], environ=environ)
-        print "form", form
+       # print "form", form
 
         try:
             username = form['username'].value
             # retrieve user
-            print "we gots a username", username
+            #print "we gots a username", username
         except KeyError:
             username = ''
-            print "no user input"
+            #print "no user input"
 
         try:
             password = form['password'].value
-            print "we gots a password", password
+            #print "we gots a password", password
         except KeyError:
             password = ''
-            print 'no password input'
+            #print 'no password input'
 
         s=[]
 
@@ -99,7 +99,7 @@ class MeepExampleApp(object):
                 ## send back a redirect to '/'
                 cookie_name, cookie_val = \
 				meepcookie.make_set_cookie_header('username', user.username)
-				headers.append((cookie_name, cookie_val))
+                headers.append((cookie_name, cookie_val))
                 k = 'Location'
                 v = '/'
                 headers.append((k, v))
@@ -154,24 +154,24 @@ class MeepExampleApp(object):
         try:
             username = form['username'].value
             # retrieve user
-            print "we gots a username", username
+            #print "we gots a username", username
         except KeyError:
             username = ''
-            print "no user input"
+            #print "no user input"
 
         try:
             password = form['password'].value
-            print "we gots a password", password
+            #print "we gots a password", password
         except KeyError:
             password = ''
-            print 'no password input'
+            #print 'no password input'
 
         try:
             password2 = form['password_confirm'].value
-            print "we gots a password", password
+            #print "we gots a password", password
         except KeyError:
             password2 = ''
-            print 'no password confirmation'
+            #print 'no password confirmation'
 
         s=[]
 

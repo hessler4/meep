@@ -105,7 +105,12 @@ class ProxyHandler (BaseHTTPServer.BaseHTTPRequestHandler):
                         out = soc
                     data = i.recv(8192)
                     if data:
-			print 'Sending:', (data,)
+                        fp = open('http_request', 'a')
+                        fp.write(data)
+                        fp.close()
+                        print '--------------------'
+                        print 'Sending:', (data,)
+                        print '--------------------'
                         out.send(data)
                         count = 0
             else:

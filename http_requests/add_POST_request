@@ -1,0 +1,13 @@
+HTTP/1.0 200 OK
+Date: Mon, 13 Feb 2012 21:58:54 GMT
+Server: WSGIServer/0.1 Python/2.7.2
+Content-type: text/html
+Content-Length: 157
+
+Please login to create and delete messages<p><a href='/login'>Log in</a><p><a href='/create_user'>Create a New User</a><p><a href='/m/list'>Show messages</a>HTTP/1.0 404 Not Found
+Date: Mon, 13 Feb 2012 21:58:54 GMT
+Server: WSGIServer/0.1 Python/2.7.2
+Content-type: text/html
+Content-Length: 15
+
+Page not found.
