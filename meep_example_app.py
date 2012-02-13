@@ -1,6 +1,7 @@
 import meeplib
 import traceback
 import cgi
+import cookie
 
 def initialize():
     # create a default user
@@ -96,6 +97,9 @@ class MeepExampleApp(object):
             user = meeplib.get_user(username)
             if user is not None and user.password == password:
                 ## send back a redirect to '/'
+                cookie_name, cookie_val = \
+				meepcookie.make_set_cookie_header('username', user.username)
+				headers.append((cookie_name, cookie_val))
                 k = 'Location'
                 v = '/'
                 headers.append((k, v))
