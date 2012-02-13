@@ -1,7 +1,7 @@
 import meeplib
 import traceback
 import cgi
-import cookie
+import meepcookie
 
 def initialize():
     # create a default user
