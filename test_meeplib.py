@@ -10,7 +10,7 @@ import meeplib
 class TestMeepLib(unittest.TestCase):
     def setUp(self):
         u = meeplib.User('foo', 'bar')
-        m = meeplib.Message('the title', 'the content', u)
+        m = meeplib.Message('the title', 'the content', u, -1)
 
     def test_for_message_existence(self):
         x = meeplib.get_all_messages()
