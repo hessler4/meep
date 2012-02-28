@@ -3,6 +3,8 @@ import traceback
 import cgi
 import meepcookie
 
+from jinja2 import Environment, FileSystemLoader
+
 def initialize():
     # create a default user
     # u = meeplib.User('test', 'foo')
@@ -15,6 +17,13 @@ def initialize():
 
     # done.
 
+    env = Environment(loader=FileSystemLoader('templates'))
+
+	def render_page(filename, **variables):
+	    template = env.get_template(filename)
+	    x = template.render(**variables)
+	    return str(x)
+	
 def retrieve_message(m):
     s = []
     s.append('id: %d<p>' % (m.id,))
@@ -343,6 +352,7 @@ class MeepExampleApp(object):
             return fn(environ, start_response)
         except:
             tb = traceback.format_exc()
+            print tb
             x = "<h1>Error!</h1><pre>%s</pre>" % (tb,)
 
             status = '500 Internal Server Error'
