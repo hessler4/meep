@@ -295,7 +295,7 @@ class MeepExampleApp(object):
         if self.username is None:
             headers = [('Content-type', 'text/html')]
             start_response("302 Found", headers)
-            return ["You must be logged in to user this feature <p><a href='/login'>Log in</a><p><a href='/m/list'>Show messages</a>"]
+            return ["You must be logged in to use this feature <p><a href='/login'>Log in</a><p><a href='/m/list'>Show messages</a>"]
 
         headers = [('Content-type', 'text/html')]
 
@@ -307,7 +307,7 @@ class MeepExampleApp(object):
         if self.username is None:
             headers = [('Content-type', 'text/html')]
             start_response("302 Found", headers)
-            return ["You must be logged in to user this feature <p><a href='/login'>Log in</a><p><a href='/m/list'>Show messages</a>"]
+            return ["You must be logged in to use this feature <p><a href='/login'>Log in</a><p><a href='/m/list'>Show messages</a>"]
 
 
         print environ['wsgi.input']
