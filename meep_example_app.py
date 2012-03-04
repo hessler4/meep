@@ -3,7 +3,7 @@ import traceback
 import cgi
 import meepcookie
 
-from jinja2 import Environment, FileSystemLoader
+#from jinja2 import Environment, FileSystemLoader
 
 def initialize():
     # create a default user
@@ -17,12 +17,12 @@ def initialize():
 
     # done.
 
-    env = Environment(loader=FileSystemLoader('templates'))
+#    env = Environment(loader=FileSystemLoader('templates'))
 
-	def render_page(filename, **variables):
-	    template = env.get_template(filename)
-	    x = template.render(**variables)
-	    return str(x)
+#    def render_page(filename, **variables):
+#	    template = env.get_template(filename)
+#	    x = template.render(**variables)
+#	    return str(x)
 	
 def retrieve_message(m):
     s = []
