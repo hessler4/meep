@@ -1,0 +1,6 @@
+go http://localhost:8000/
+follow "Log in"
+
+fv 1 username 'test user FOO'
+fv 1 password 'admin'
+submit

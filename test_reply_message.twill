@@ -1,0 +1,17 @@
+go http://localhost:8000/
+follow "Show messages"
+
+find "Reply"
+
+fv 3 message 'reply to the original message'
+submit
+
+fv 5 message 'reply to the previous reply'
+submit
+
+fv 3 message 'second reply to the original message'
+submit
+
+find 'reply to the original message'
+find 'reply to the previous reply'
+find 'second reply to the original message'

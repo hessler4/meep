@@ -1,13 +1,14 @@
 go http://localhost:8000/
-follow "Create a New User"
+follow "Log in"
 
 fv 1 username 'test user FOO'
 fv 1 password 'admin'
-fv 1 password_confirm 'admin'
 submit
 
-follow "Show messages"
+follow "Add a message"
+fv 1 title 'test title'
+fv 1 message 'this is my message'
+submit
+
 url /m/list
-find 'my title'
-
-
+find 'FOO'

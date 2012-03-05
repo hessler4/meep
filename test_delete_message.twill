@@ -1,0 +1,7 @@
+go http://localhost:8000/
+follow "Show messages"
+
+find "Delete"
+
+fv 2 id '0'
+submit
