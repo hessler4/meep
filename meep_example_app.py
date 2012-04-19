@@ -2,8 +2,24 @@ import meeplib
 import traceback
 import cgi
 import meepcookie
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import sqlite3 as lite
+import sys
 
 #from jinja2 import Environment, FileSystemLoader
+
+con = lite.connect('test.db')
+cur = con.cursor()
+#cur.executescript("""
+#    DROP TABLE IF EXISTS Messages;
+#    DROP TABLE IF EXISTS Users;
+# 	CREATE TABLE Messages(Title TEXT, Post TEXT, Author TEXT, Parent INT);
+#    CREATE TABLE Users(Name TEXT, Password TEXT);
+#    """)
+
+#con.commit()
 
 def initialize():
     # create a default user
@@ -200,7 +216,11 @@ class MeepExampleApp(object):
                     The Password and Confirmation Password you provided did not match<p>''')
             else:
                 u = meeplib.User(username, password)
-                meeplib.save()
+                with con:
+                    cur.execute("INSERT INTO Users (Name, Password) VALUES (?, ?)", (username, password))
+
+                con.commit()
+                #meeplib.save()
                 ## send back a redirect to '/'
                 k = 'Location'
                 v = '/'
@@ -254,7 +274,6 @@ class MeepExampleApp(object):
 			        indent -= 1 
 			        deepest_node = meeplib.get_message(curr_id)
 			         
-			
         listed.clear()
         s.append("<a href='../../'>index</a>")
         headers = [('Content-type', 'text/html')]
@@ -282,7 +301,7 @@ class MeepExampleApp(object):
 		
         meeplib.delete_message(msg)
 
-        meeplib.save()
+        #meeplib.save()
         
         headers = [('Content-type', 'text/html')]
         headers.append(('Location', '/m/list'))
@@ -320,8 +339,12 @@ class MeepExampleApp(object):
         user = meeplib.get_user(self.username)
         
         new_message = meeplib.Message(title, message, user, parent)
-
-        meeplib.save()
+  
+        with con:
+            cur.execute("INSERT INTO Messages (Title, Post, Author, Parent) VALUES (?, ?, ?, ?)", (title, message, self.username, parent))
+			
+        con.commit()
+        #meeplib.save()
 
         headers = [('Content-type', 'text/html')]
         headers.append(('Location', '/m/list'))

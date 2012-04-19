@@ -23,6 +23,8 @@ Functions and classes:
 
 """
 import pickle
+import sqlite3 as lite
+import sys
 
 __all__ = ['Message', 'get_all_messages', 'get_message', 'delete_message',
            'User', 'get_user', 'get_all_users', 'delete_user']
@@ -63,21 +65,54 @@ def _reset():
 def save():
 	print "SAVING"
 	obj = _messages, _users, _user_ids
-	print _messages
+	#print _messages
 	fp = open('save.pickle', 'wb')
 	pickle.dump(obj, fp)
 	fp.close()
+	#for thing in _user_ids:
+	#       print thing
 	
 def load():
-	try:
-	   print "LOADING"
-	   global _messages, _users, _user_ids
-	   fp = open('save.pickle', 'rb')
-	   _messages, _users, _user_ids = pickle.load(fp)
-	   print _messages
-	   fp.close() 
-	except IOError:  # file does not exist/cannot be opened
-	   print "Error opening 'save.pickle'"
+    con = lite.connect('test.db')
+    cur = con.cursor()
+    try:
+        with con:
+            con.row_factory = lite.Row
+            cur = con.cursor()
+            cur.execute("SELECT * FROM Users")
+            rows = cur.fetchall()
+            for row in rows:
+                print "%s %s" % (row["Name"], row["Password"])
+                User(row["Name"], row["Password"])
+
+            cur.execute("SELECT * FROM Messages")
+            rows = cur.fetchall()
+            for row in rows:
+                #print "%s %s %s %s" % (row["Title"], row["Post"], row["Author"], row["Parent"])
+                Message(row["Title"], row["Post"], get_user(row["Author"]), int(row["Parent"]))
+
+	    print "printing messages"
+	    for m in get_all_messages():
+	        print m.author.username, m.title, m.post, m.parent, m.id
+	#####################################
+#       global _messages, _users, _user_ids
+#       fp = open('save.pickle', 'rb')
+#       _messages, _users, _user_ids = pickle.load(fp)
+#       print _messages
+#       fp.close() 
+
+#    except IOError:  # file does not exist/cannot be opened
+#       print "Error opening 'save.pickle'"
+	
+    except lite.Error, e:
+
+       print "Error %s:" % e.args[0]
+       sys.exit(1)
+	
+    finally:
+
+       if con:
+          con.close()
 ###
 
 class Message(object):
