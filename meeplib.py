@@ -89,11 +89,14 @@ def load():
             rows = cur.fetchall()
             for row in rows:
                 #print "%s %s %s %s" % (row["Title"], row["Post"], row["Author"], row["Parent"])
-                Message(row["Title"], row["Post"], get_user(row["Author"]), int(row["Parent"]))
+                m = Message(row["Title"], row["Post"], get_user(row["Author"]), int(row["Parent"]))
+                cur.execute("UPDATE Messages SET ID = ?", (m.id,))
+
+            con.commit()
 
 	    print "printing messages"
 	    for m in get_all_messages():
-	        print m.author.username, m.title, m.post, m.parent, m.id
+	        print m.id, m.author.username, m.title, m.post, m.parent
 	#####################################
 #       global _messages, _users, _user_ids
 #       fp = open('save.pickle', 'rb')

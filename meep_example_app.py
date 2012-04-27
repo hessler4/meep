@@ -12,14 +12,15 @@ import sys
 
 con = lite.connect('test.db')
 cur = con.cursor()
-#cur.executescript("""
-#    DROP TABLE IF EXISTS Messages;
-#    DROP TABLE IF EXISTS Users;
-# 	CREATE TABLE Messages(Title TEXT, Post TEXT, Author TEXT, Parent INT);
-#    CREATE TABLE Users(Name TEXT, Password TEXT);
-#    """)
+cur.executescript("""
+    CREATE TABLE IF NOT EXISTS Messages(ID INT, Title TEXT, Post TEXT, Author TEXT, Parent INT);
+    CREATE TABLE IF NOT EXISTS Users(Name TEXT, Password TEXT);
+    """)
 
-#con.commit()
+con.commit()
+
+#DROP TABLE IF EXISTS Messages;
+#DROP TABLE IF EXISTS Users;
 
 def initialize():
     # create a default user
@@ -218,8 +219,8 @@ class MeepExampleApp(object):
                 u = meeplib.User(username, password)
                 with con:
                     cur.execute("INSERT INTO Users (Name, Password) VALUES (?, ?)", (username, password))
-
                 con.commit()
+
                 #meeplib.save()
                 ## send back a redirect to '/'
                 k = 'Location'
@@ -278,10 +279,15 @@ class MeepExampleApp(object):
         s.append("<a href='../../'>index</a>")
         headers = [('Content-type', 'text/html')]
         start_response("200 OK", headers)
-        #print("".join(s))
-        return ["".join(s)]
+        print("".join(s))
+        return [str("".join(s))]
 
     def delete_message(self, environ, start_response):
+        if self.username is None:
+            headers = [('Content-type', 'text/html')]
+            start_response("302 Found", headers)
+            return ["You must be logged in to use this feature <p><a href='/login'>Log in</a><p><a href='/m/list'>Show messages</a>"]
+
         form = cgi.FieldStorage(fp=environ['wsgi.input'], environ=environ)
 
         msgid = int(form['id'].value)
@@ -301,6 +307,9 @@ class MeepExampleApp(object):
 		
         meeplib.delete_message(msg)
 
+        with con:
+            cur.execute("DELETE FROM Messages WHERE ID = ?", (msgid,))
+        con.commit()
         #meeplib.save()
         
         headers = [('Content-type', 'text/html')]
@@ -341,7 +350,7 @@ class MeepExampleApp(object):
         new_message = meeplib.Message(title, message, user, parent)
   
         with con:
-            cur.execute("INSERT INTO Messages (Title, Post, Author, Parent) VALUES (?, ?, ?, ?)", (title, message, self.username, parent))
+            cur.execute("INSERT INTO Messages (ID, Title, Post, Author, Parent) VALUES (?, ?, ?, ?, ?)", (new_message.id, title, message, self.username, parent))
 			
         con.commit()
         #meeplib.save()
